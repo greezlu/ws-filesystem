@@ -1,0 +1,27 @@
+{
+    "name": "greezlu/ws-filesystem",
+    "description": "Filesystem Manager",
+    "type": "project",
+    "license": "MIT",
+    "homepage": "https://github.com/greezlu/ws-filesystem",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "greezlu",
+            "email": "greezlu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "~7.4.0",
+        "greezlu/ws-exception": "*"
+    },
+    "keywords": [
+        "php",
+        "filesystem"
+    ],
+    "autoload": {
+        "psr-4": {
+            "WebServer\\Filesystem\\": "src/Filesystem"
+        }
+    }
+}
