@@ -144,4 +144,24 @@ class FileManager
             throw new LocalizedException('Unable to create dir: ' . $dirPath);
         }
     }
+
+    /**
+     * @param string $filePath
+     * @param array|null $variableList
+     * @return void
+     */
+    public function include(string $filePath, array $variableList = null): void
+    {
+        $filePath = $this->setWorkingDir($filePath);
+
+        if (!$this->isFile($filePath)) {
+            return;
+        }
+
+        if (is_array($variableList)) {
+            extract($variableList);
+        }
+
+        include $filePath;
+    }
 }
