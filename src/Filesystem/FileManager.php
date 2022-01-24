@@ -18,6 +18,7 @@ class FileManager
 
     /**
      * @param string|null $dirPath
+     * @throws LocalizedException
      */
     public function __construct(string $dirPath = null)
     {
