@@ -30,7 +30,7 @@ class FileManager
      * @param string $path
      * @return string
      */
-    protected function setWorkingDir(string $path): string
+    public function getFullPath(string $path): string
     {
         return $path === '.'
         || substr($path, 0, strlen(static::WORKING_DIR)) === static::WORKING_DIR
@@ -44,7 +44,7 @@ class FileManager
      */
     public function isFile(string $filePath): bool
     {
-        $filePath = $this->setWorkingDir($filePath);
+        $filePath = $this->getFullPath($filePath);
         return is_file($filePath);
     }
 
@@ -54,7 +54,7 @@ class FileManager
      */
     public function isDir(string $dirPath): bool
     {
-        $dirPath = $this->setWorkingDir($dirPath);
+        $dirPath = $this->getFullPath($dirPath);
         return is_dir($dirPath);
     }
 
@@ -65,7 +65,7 @@ class FileManager
      */
     public function readDir(string $dirPath): array
     {
-        $dirPath = $this->setWorkingDir($dirPath);
+        $dirPath = $this->getFullPath($dirPath);
 
         if (!$this->isDir($dirPath)) {
             throw new LocalizedException('Unable to find dir: ' . $dirPath);
@@ -87,7 +87,7 @@ class FileManager
      */
     public function readFile(string $filePath): string
     {
-        $filePath = $this->setWorkingDir($filePath);
+        $filePath = $this->getFullPath($filePath);
 
         if (!$this->isFile($filePath)) {
             throw new LocalizedException('Unable to find file: ' . $filePath);
@@ -104,13 +104,23 @@ class FileManager
 
     /**
      * @param string $filePath
+     * @return void
+     * @throws LocalizedException
+     */
+    public function openFile(string $filePath): void
+    {
+        echo $this->readFile($filePath);
+    }
+
+    /**
+     * @param string $filePath
      * @param string $fileContent
      * @return void
      * @throws LocalizedException
      */
     public function createFile(string $filePath, string $fileContent): void
     {
-        $filePath = $this->setWorkingDir($filePath);
+        $filePath = $this->getFullPath($filePath);
 
         $pathInfo = pathinfo($filePath);
 
@@ -132,7 +142,7 @@ class FileManager
      */
     public function createDir(string $dirPath): void
     {
-        $dirPath = $this->setWorkingDir($dirPath);
+        $dirPath = $this->getFullPath($dirPath);
 
         if ($this->isDir($dirPath)) {
             return;
@@ -143,25 +153,5 @@ class FileManager
         if ($success === false) {
             throw new LocalizedException('Unable to create dir: ' . $dirPath);
         }
-    }
-
-    /**
-     * @param string $filePath
-     * @param array|null $variableList
-     * @return void
-     */
-    public function include(string $filePath, array $variableList = null): void
-    {
-        $filePath = $this->setWorkingDir($filePath);
-
-        if (!$this->isFile($filePath)) {
-            return;
-        }
-
-        if (is_array($variableList)) {
-            extract($variableList);
-        }
-
-        include $filePath;
     }
 }

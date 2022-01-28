@@ -16,7 +16,7 @@ class AdminFileManager extends FileManager
      * @param string $path
      * @return string
      */
-    protected function setWorkingDir(string $path): string
+    public function getFullPath(string $path): string
     {
         return $path === '..'
         || substr($path, 0, strlen(static::WORKING_DIR)) === static::WORKING_DIR
