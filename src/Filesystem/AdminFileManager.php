@@ -10,7 +10,7 @@ namespace WebServer\Filesystem;
  */
 class AdminFileManager extends FileManager
 {
-    protected const WORKING_DIR = '../';
+    protected const DEFAULT_WORKING_DIR = '../';
 
     /**
      * @param string $path
@@ -19,8 +19,8 @@ class AdminFileManager extends FileManager
     public function getFullPath(string $path): string
     {
         return $path === '..'
-        || substr($path, 0, strlen(static::WORKING_DIR)) === static::WORKING_DIR
+        || substr($path, 0, strlen($this->dirPath)) === $this->dirPath
             ? $path
-            : static::WORKING_DIR . $path;
+            : $this->dirPath . $path;
     }
 }

@@ -12,9 +12,14 @@ use WebServer\Exceptions\LocalizedException;
  */
 class FileManager
 {
-    protected const WORKING_DIR = './';
+    protected const DEFAULT_WORKING_DIR = './';
 
     protected const PERMISSION = 0775;
+
+    /**
+     * @var string 
+     */
+    protected string $dirPath;
 
     /**
      * @param string|null $dirPath
@@ -22,7 +27,7 @@ class FileManager
      */
     public function __construct(string $dirPath = null)
     {
-        $dirPath = $dirPath ?? static::WORKING_DIR;
+        $this->dirPath = $dirPath ?? static::DEFAULT_WORKING_DIR;
         $this->createDir($dirPath);
     }
 
@@ -33,9 +38,9 @@ class FileManager
     public function getFullPath(string $path): string
     {
         return $path === '.'
-        || substr($path, 0, strlen(static::WORKING_DIR)) === static::WORKING_DIR
+        || substr($path, 0, strlen($this->dirPath)) === $this->dirPath
             ? $path
-            : static::WORKING_DIR . $path;
+            : $this->dirPath . $path;
     }
 
     /**
