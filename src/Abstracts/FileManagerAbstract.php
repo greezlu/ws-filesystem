@@ -14,6 +14,8 @@ abstract class FileManagerAbstract
 {
     protected const DEFAULT_WORKING_DIR = null;
 
+    protected const PUBLIC_PATH = null;
+
     protected const PERMISSION = 0775;
 
     /**
@@ -41,6 +43,17 @@ abstract class FileManagerAbstract
         || substr($path, 0, strlen($this->dirPath)) === $this->dirPath
             ? $path
             : $this->dirPath . '/'  . $path;
+    }
+
+    /**
+     * @param string $filePath
+     * @return string
+     */
+    public function getPublicPath(string $filePath): string
+    {
+        return !is_null(static::PUBLIC_PATH)
+            ? static::PUBLIC_PATH . '/' . $filePath
+            : $filePath;
     }
 
     /**

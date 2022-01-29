@@ -13,4 +13,6 @@ use WebServer\Abstracts\FileManagerAbstract;
 class StaticFileManager extends FileManagerAbstract
 {
     protected const DEFAULT_WORKING_DIR = './static';
+
+    protected const PUBLIC_PATH = '/static';
 }

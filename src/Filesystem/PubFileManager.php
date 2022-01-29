@@ -13,4 +13,6 @@ use WebServer\Abstracts\FileManagerAbstract;
 class PubFileManager extends FileManagerAbstract
 {
     protected const DEFAULT_WORKING_DIR = './files';
+
+    protected const PUBLIC_PATH = '/file';
 }
