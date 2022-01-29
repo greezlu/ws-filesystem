@@ -10,7 +10,7 @@ use WebServer\Abstracts\FileManagerAbstract;
 /**
  * @package greezlu/ws-filesystem
  */
-class AdminFileManager extends FileManagerAbstract
+class StaticFileManager extends FileManagerAbstract
 {
-    protected const DEFAULT_WORKING_DIR = '../';
+    protected const DEFAULT_WORKING_DIR = './static';
 }

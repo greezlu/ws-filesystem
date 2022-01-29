@@ -3,16 +3,16 @@
 
 declare(strict_types=1);
 
-namespace WebServer\Filesystem;
+namespace WebServer\Abstracts;
 
 use WebServer\Exceptions\LocalizedException;
 
 /**
  * @package greezlu/ws-filesystem
  */
-class FileManager
+abstract class FileManagerAbstract
 {
-    protected const DEFAULT_WORKING_DIR = './';
+    protected const DEFAULT_WORKING_DIR = null;
 
     protected const PERMISSION = 0775;
 
@@ -28,7 +28,7 @@ class FileManager
     public function __construct(string $dirPath = null)
     {
         $this->dirPath = $dirPath ?? static::DEFAULT_WORKING_DIR;
-        $this->createDir($dirPath);
+        $this->createDir($this->dirPath);
     }
 
     /**
@@ -37,10 +37,10 @@ class FileManager
      */
     public function getFullPath(string $path): string
     {
-        return $path === '.'
+        return $path === trim($this->dirPath, '/')
         || substr($path, 0, strlen($this->dirPath)) === $this->dirPath
             ? $path
-            : $this->dirPath . $path;
+            : $this->dirPath . '/'  . $path;
     }
 
     /**
