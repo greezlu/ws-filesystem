@@ -132,6 +132,29 @@ abstract class FileManagerAbstract
 
     /**
      * @param string $filePath
+     * @param string $data
+     * @param string|null $mode
+     * @return void
+     * @throws LocalizedException
+     */
+    public function writeFile(string $filePath, string $data, string $mode = 'a'): void
+    {
+        $fileDescriptor = fopen($filePath, $mode);
+
+        if ($fileDescriptor === false) {
+            throw new LocalizedException('Unable to open file to write: ' . $filePath);
+        }
+
+        flock($fileDescriptor, LOCK_EX);
+
+        fwrite($fileDescriptor, $data);
+        fflush($fileDescriptor);
+
+        flock($fileDescriptor, LOCK_UN);
+    }
+
+    /**
+     * @param string $filePath
      * @param string $fileContent
      * @return void
      * @throws LocalizedException
